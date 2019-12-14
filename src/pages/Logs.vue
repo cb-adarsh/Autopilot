@@ -1,19 +1,22 @@
 <template>
   <div>
     <Navbar/>
-    <div
-      class="rs-logs rs-logs--full"
-      v-for="log in logs"
-      :key="log.id">
-      <div class="my-flex" style="align-items: center;">
-        <div class="is-size-5" style="margin-right: 16px">Workflow {{rand()}}</div>
-        <b-tag rounded class="my-tiny-text" :class="{'is-success':log.success,'is-danger':!log.success}">
-          {{log.success ? 'SUCCESS' : 'FAILED'}}
-        </b-tag>
-      </div>
-      <div class="my-flex">
-        <div><b>{{log.count}}</b> records affected</div> &nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="is-size-6">Last ran at {{getFormattedDate(log.lastRunAt)}}</div>
+    <div class="container">
+      <div class="is-size-3" style="margin-top: 24px;margin-left: 16px"><b>Logs</b></div>
+      <div
+        class="rs-logs rs-logs--full"
+        v-for="log in logs"
+        :key="log.id">
+        <div class="my-flex" style="align-items: center;">
+          <div class="is-size-5" style="margin-right: 16px">Workflow {{rand()}}</div>
+          <b-tag rounded class="my-tiny-text" :class="{'is-success':log.success,'is-danger':!log.success}">
+            {{log.success ? 'SUCCESS' : 'FAILED'}}
+          </b-tag>
+        </div>
+        <div class="my-flex">
+          <div><b>{{log.count}}</b> records affected</div> &nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="is-size-6">Last ran at {{getFormattedDate(log.lastRunAt)}}</div>
+        </div>
       </div>
     </div>
   </div>

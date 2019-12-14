@@ -16,11 +16,18 @@
 <!--      </div>-->
       <div class="navbar-end">
         <div class="navbar-item">
-            <a class=" "
-               v-if="$route.name === 'dashboard' || $route.name === 'home'"
-               @click="route('logs')">
-              <strong>Logs</strong>
-            </a>
+          <a class=" "
+             v-if="$route.name === 'dashboard' || $route.name === 'home'"
+             @click="route('logs')">
+            <strong>Logs</strong>
+          </a>
+        </div>
+        <div class="navbar-item">
+          <a class=" "
+             v-if="$route.name === 'dashboard' || $route.name === 'home'"
+             @click="route('list')">
+            <strong>All Workflows</strong>
+          </a>
         </div>
         <div class="navbar-item">
           <div class="buttons">

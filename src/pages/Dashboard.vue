@@ -1,12 +1,12 @@
 <template>
   <div>
     <Navbar/>
-    <div class="my-container">
+    <div class="my-container2">
       <div class="my-ratio">
         <div class="card my-ratio-card">
           <div class="card-content">
             <p class="title is-size-4">
-              Ratio
+              Process status
             </p>
             <Chart/>
           </div>
@@ -47,6 +47,33 @@
             Runs per month
           </p>
           <Chart2/>
+        </div>
+      </div>
+      <div class="card my-top-ten">
+        <div class="card-content">
+          <div class="my-flex" style="justify-content: space-between">
+            <div class="title is-size-4">
+              Top 10 runs
+            </div>
+            <a @click="$router.push('logs')" class="my-push-right">Show all</a>
+          </div>
+          <div class="my-error-log-container">
+            <div
+              class="rs-logs"
+              v-for="log in logs.filter(log=>log.success).slice(0,10)"
+              :key="log.id">
+              <div class="my-flex" style="align-items: center;">
+                <div class="is-size-5" style="margin-right: 16px">Workflow {{rand()}}</div>
+                <b-tag rounded class="my-tiny-text my-tiny-text2" :class="{'is-success':log.success,'is-danger':!log.success}">
+                  {{log.success ? 'SUCCESS' : 'FAILED'}}
+                </b-tag>
+              </div>
+              <div class="my-flex">
+                <div><b>{{log.count}}</b> records affected</div> &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="is-size-6">Last ran at {{getFormattedDate(log.lastRunAt)}}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

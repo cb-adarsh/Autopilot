@@ -13,8 +13,8 @@
                 "data": {
                     "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
                     "datasets": [{
-                        "backgroundColor": "rgba(255, 99, 132, 0.5)",
-                        "borderColor": "rgb(255, 99, 132)",
+                        "backgroundColor": "rgba(54, 162, 235, 0.2)",
+                        "borderColor": "rgba(54, 162, 235, 1)",
                         "data": [-76.97, 46.91, 32.31, -7.19, -9.85, -76.91, -50.36, 42.66],
                         "label": "Runs per month",
                         "fill": "start"
