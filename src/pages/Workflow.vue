@@ -1,11 +1,17 @@
 <template>
   <div>
     <Navbar/>
-    <div v-if="!hasPreMeta" class="my-container">
-      <div class="my-push-right">
-        <b-button type="is-primary" size="is-medium">
-          <span>Save Workflow</span>
-        </b-button>
+    <div v-if=" hasPreMeta" class="my-container">
+      <div style="display: flex;justify-content: space-between;margin-bottom: 24px">
+        <div>
+          <div class="is-size-3">{{this.meta.name}}</div>
+          <div class="is-size-6">{{this.meta.desc}}</div>
+        </div>
+        <div class="my-push-right">
+          <b-button type="is-primary" size="is-medium">
+            <span>Save Workflow</span>
+          </b-button>
+        </div>
       </div>
       <b-field label="Entity">
         <b-dropdown
@@ -125,31 +131,49 @@
         <div class="card" style="width: 400px;">
           <div class="title">Workflow</div>
           <b-field label="Name">
-            <b-input v-model="name" type="string" @input="updateVal"></b-input>
+            <b-input v-model="name" type="string"></b-input>
           </b-field>
           <b-field label="Description">
-            <b-input v-model="desc" type="string" @input="updateVal"></b-input>
+            <b-input v-model="desc" type="string"></b-input>
           </b-field>
-          <b-field label="Entity">
+          <b-field label="Type">
             <b-dropdown
-              v-model="entityName"
+              v-model="workflowType"
               :mobile-modal="false"
               aria-role="list">
               <button class="button select" type="button" slot="trigger">
-                <span>{{ meta.entityName || 'Choose an entity' }}</span>
+                <span>{{ workflowType || 'Choose' }}</span>
                 <b-icon icon="menu-down"></b-icon>
               </button>
 
               <b-dropdown-item
-                v-for="option in entities"
-                :key="option"
-                :value="option"
+                value="Hook"
                 aria-role="listitem">
-                <span>{{option}}</span>
+                <span>Hook</span>
+              </b-dropdown-item>
+              <b-dropdown-item
+                :disabled="true"
+                value="scheduled"
+                aria-role="listitem">
+                <span>Scheduled</span>
+              </b-dropdown-item>
+              <b-dropdown-item
+                :disabled="true"
+                value="immediate"
+                aria-role="listitem">
+                <span>Immediate</span>
               </b-dropdown-item>
 
             </b-dropdown>
           </b-field>
+          <footer class="">
+            <button @click="$router.push('/')" class="button">
+              Cancel
+            </button>
+            <button @click="proceed" class="button is-primary">
+              Proceed
+            </button>
+          </footer>
         </div>
       </b-modal>
     </div>
@@ -188,7 +212,10 @@
                 entityName: '',
                 trigger: '',
                 actionName: '',
-                hasPreMeta: false
+                hasPreMeta: false,
+                desc:'',
+                name:'',
+                workflowType:''
             }
         },
         async created() {
@@ -238,6 +265,15 @@
             }
         },
         methods: {
+            proceed(){
+              if(this.name === '' || this.desc === '' || this.workflowType === ''){
+                  return;
+              }
+              this.meta.name = this.name;
+              this.meta.desc = this.desc;
+              this.meta.type = this.workflowType;
+              this.hasPreMeta = true;
+            },
             addCriteria() {
                 this.meta.criterias.push({});
             },

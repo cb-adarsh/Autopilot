@@ -80,3 +80,34 @@ input {
 .card-content{
   padding: 0;
 }
+.my-ratio{
+  display: flex;
+}
+.my-ratio > div {
+  margin: 12px;
+}
+.my-ratio-card{
+  width: 300px;
+}
+.my-flex--one{
+  flex: 1;
+}
+.rs-logs{
+  padding: 8px;
+  margin: 4px;
+  border: 1px solid #dbdbdb;
+  border-radius: 6px;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 30, 0.1),
+  0 1px 2px 0 rgba(0, 0, 30, 0.1),
+  0 2px 4px 0 rgba(0, 0, 30, 0.1);
+}
+.my-tiny-text{
+  font-size: 10px !important;
+}
+.my-monthly{
+  width: calc(100% - 24px);
+  margin: 13px;
+}
+.rs-logs--full{
+  margin: 8px 16px;
+}
