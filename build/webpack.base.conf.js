@@ -31,10 +31,27 @@ module.exports = {
   module: {
     rules: [
       {
-      test: /\.vue$/,
-      loader: 'vue-loader',
-      options: vueLoaderConfig
-    },
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: vueLoaderConfig
+      },
+      {
+        test: /\.ts$/,
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'ts-loader',
+            // ts-loader will cache this option and will reuse it whenever ts-loader is called again
+            options: {
+              appendTsSuffixTo: [/\.vue$/],
+              transpileOnly: true
+            }
+          }
+        ],
+        exclude: /node_modules/
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
@@ -44,11 +61,23 @@ module.exports = {
         include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader'
+          }
+        ]
+      },
+      {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            { loader: 'css-loader', options: { importLoaders: 1 } },
+            {loader: 'css-loader', options: {importLoaders: 1}},
             'postcss-loader',
           ],
         }),
@@ -91,7 +120,7 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   },
-  plugins:[
+  plugins: [
     new ExtractTextPlugin('styles.css', {
       disable: process.env.NODE_ENV === 'development',
     })

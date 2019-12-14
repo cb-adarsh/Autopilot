@@ -1,17 +1,17 @@
 <template>
   <div>
     <Navbar/>
-    <b-button type="is-primary">{{msg}}</b-button>
+    {{msg}}
   </div>
 </template>
 
 <script>
     import Navbar from "../components/Navbar.vue";
     export default {
-        name: 'Dashboard',
+        name: 'Logs',
         data () {
             return {
-                msg: 'Dashboard Compontent'
+                msg: 'Logs Compontent'
             }
         },
         components:{

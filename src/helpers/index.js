@@ -1,172 +1,97 @@
 let operations = {
-  text: [
+  string: [
     {
-      'name': 'In',
-      'displayName': "In",
-      'type': 'multi_select',
-      'dtype': 'string',
-    }, {
-      'name': 'Not In',
-      'displayName': "Not In",
-      'type': 'multi_select',
-      'dtype': 'string',
-    }, {
-      'name': 'Contains',
+      'name': 'equals',
+      'displayName': "Equals",
+      'type': 'string'
+    },
+    {
+      'name': 'not_equals',
+      'displayName': "Not equals",
+      'type': 'string'
+    },
+    {
+      'name': 'contains',
       'displayName': "Contains",
-      'type': 'text',
-      'dtype': 'string',
-    }, {
-      'name': 'Does not Contain',
-      'displayName': "Does not Contain",
-      'type': 'text',
-      'dtype': 'string',
-    }, {
-      'name': 'Starts With',
-      'displayName': "Starts With",
-      'type': 'text',
-      'dtype': 'string',
-    }, {
-      'name': 'Ends With',
-      'displayName': "Ends With",
-      'type': 'text',
-      'dtype': 'string',
-    }, {
-      'name': 'Is Empty',
-      'displayName': "Is Empty",
-      'type': 'none',
-      'dtype': 'string',
-    }, {
-      'name': 'Is Not Empty',
-      'displayName': "Is Not Empty",
-      'type': 'none',
-      'dtype': 'string',
-    }
-  ],
-  date: [
-    {
-      'name': 'Is',
-      'displayName': "Is",
-      'type': 'before',
-      'dtype': 'date_time',
-    }, {
-      'name': 'Is Not',
-      'displayName': "Is Not",
-      'type': 'before',
-      'dtype': 'date_time',
+      'type': 'string'
     },
     {
-      'name': 'Between',
-      'displayName': "Between",
-      'type': 'between',
-      'dtype': 'date_time',
+      'name': 'does_not_contains',
+      'displayName': "Does not contains",
+      'type': 'string'
     },
     {
-      'name': 'Not Between',
-      'displayName': "Not Between",
-      'type': 'between',
-      'dtype': 'date_time',
-    },
-    {
-      'name': 'Is Before',
-      'displayName': "Is Before",
-      'type': 'before',
-      'dtype': 'date_time',
-    },
-    {
-      'name': 'Is After',
-      'displayName': "Is After",
-      'type': 'after',
-      'dtype': 'date_time',
-    },
-    {
-      'name': 'Is Empty',
-      'displayName': "Is Empty",
-      'type': 'none',
-      'dtype': 'date_time',
-    }, {
-      'name': 'Is Not Empty',
-      'displayName': "Is Not Empty",
-      'type': 'none',
-      'dtype': 'date_time',
+      'name': 'starts_with',
+      'displayName': "Starts with",
+      'type': 'string'
     }
   ],
   number: [
     {
-      'name': 'Equal To',
-      'displayName': "Equal To",
-      'type': 'text',
-      'dtype': 'number',
-    }, {
-      'name': 'Not Equal To',
-      'displayName': "Not Equal To",
-      'type': 'text',
-      'dtype': 'number',
-    }, {
-      'name': 'Less Than',
-      'displayName': "Less Than",
-      'type': 'text',
-      'dtype': 'number',
-    }, {
-      'name': 'Greater Than',
-      'displayName': "Greater Than",
-      'type': 'text',
-      'dtype': 'number',
-    }, {
-      'name': 'Is Empty',
-      'displayName': "Is Empty",
-      'type': 'none',
-      'dtype': 'number',
-    }, {
-      'name': 'Is Not Empty',
-      'displayName': "Is Not Empty",
-      'type': 'none',
-      'dtype': 'number',
+      'name': 'equals',
+      'displayName': "Equals",
+      'type': 'number'
+    },
+    {
+      'name': 'greater_than',
+      'displayName': "Greater than",
+      'type': 'number'
+    },
+    {
+      'name': 'greater_or_equal',
+      'displayName': "Greater than or Equal to",
+      'type': 'number'
+    },
+    {
+      'name': 'lesser_than',
+      'displayName': "Lesser than",
+      'type': 'number'
+    },
+    {
+      'name': 'lesser_or_equal',
+      'displayName': "Lesser than or Equal to",
+      'type': 'number'
+    },
+    {
+      'name': 'is_present',
+      'displayName': "Is present",
+      'type': 'none'
+    },
+    {
+      'name': 'is_not_present',
+      'displayName': "Is not present",
+      'type': 'none'
     }
   ],
-  currency: [
+  list: [
     {
-      'name': 'Equal To',
-      'displayName': "Equal To",
-      'type': 'text',
-      'dtype': 'number',
+      'name': 'includes',
+      'displayName': "Includes",
+      'type': 'multi_list'
     }, {
-      'name': 'Not Equal To',
-      'displayName': "Not Equal To",
-      'type': 'text',
-      'dtype': 'number',
+      'name': 'does_not_includes',
+      'displayName': "Does not includes",
+      'type': 'multi_list'
     }, {
-      'name': 'Less Than',
-      'displayName': "Less Than",
-      'type': 'text',
-      'dtype': 'number',
+      'name': 'is',
+      'displayName': "Is",
+      'type': 'list'
     }, {
-      'name': 'Greater Than',
-      'displayName': "Greater Than",
-      'type': 'text',
-      'dtype': 'number',
-    }, {
-      'name': 'Is Empty',
-      'displayName': "Is Empty",
-      'type': 'none',
-      'dtype': 'number',
-    }, {
-      'name': 'Is Not Empty',
-      'displayName': "Is Not Empty",
-      'type': 'none',
-      'dtype': 'number',
+      'name': 'is_not',
+      'displayName': "Is not",
+      'type': 'list'
+    },
+  ],
+  boolean:[
+    {
+      'name': 'is',
+      'displayName': "Is",
+      'type': 'boolean'
     }
   ]
 };
 
 export function validConditionsFromDataType(dataType) {
-  switch (dataType) {
-    case 'string':
-      return operations['text'];
-    case 'number':
-      return operations['number'];
-      list
-      multi_list
-  }
   return operations[dataType];
 }
 

@@ -3,11 +3,12 @@ import Router from 'vue-router'
 import App from '../App.vue'
 import Dashboard from "../pages/Dashboard.vue";
 import Workflow from "../pages/Workflow";
+import Logs from "../pages/Logs";
 
 Vue.use(Router);
 
 export default new Router({
-  mode:'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -15,6 +16,11 @@ export default new Router({
       children: [
         {
           path: '',
+          name: 'home',
+          component: Dashboard
+        },
+        {
+          path: 'dashboard',
           name: 'dashboard',
           component: Dashboard
         },
@@ -22,6 +28,11 @@ export default new Router({
           path: 'workflow',
           name: 'workflow',
           component: Workflow
+        },
+        {
+          path: 'logs',
+          name: 'logs',
+          component: Logs
         }
       ]
     },

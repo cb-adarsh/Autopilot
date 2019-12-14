@@ -31,7 +31,7 @@ export function fetchModel() {
             },
             {
               "name": "Kill Who",
-              "type": "multi_list",
+              "type": "list",
               "possibleValues": [
                 "Cercei",
                 "Robert",
@@ -66,7 +66,7 @@ export function fetchModel() {
                 },
                 {
                   "name": "country",
-                  "type": "multi_list",
+                  "type": "list",
                   "possibleValues": [
                     "IN",
                     "US",
@@ -102,7 +102,7 @@ export function fetchModel() {
                     },
                     {
                       "name": "country",
-                      "type": "multi_list",
+                      "type": "list",
                       "possibleValues": [
                         "IN",
                         "US",
@@ -145,7 +145,7 @@ export function fetchModel() {
             },
             {
               "name": "Kill Who",
-              "type": "multi_list",
+              "type": "list",
               "possibleValues": [
                 "Cercei",
                 "Robert",
@@ -168,7 +168,7 @@ export function fetchModel() {
                   "type": "string"
                 },
                 {
-                  "name": "country",
+                  "name": "States",
                   mandatory: true,
                   "type": "list",
                   "possibleValues": [
@@ -179,8 +179,8 @@ export function fetchModel() {
                   ]
                 },
                 {
-                  "name": "country",
-                  "type": "multi_list",
+                  "name": "Country",
+                  "type": "list",
                   "possibleValues": [
                     "IN",
                     "US",
@@ -216,7 +216,7 @@ export function fetchModel() {
                     },
                     {
                       "name": "country",
-                      "type": "multi_list",
+                      "type": "list",
                       "possibleValues": [
                         "IN",
                         "US",
