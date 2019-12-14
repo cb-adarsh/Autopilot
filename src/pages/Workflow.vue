@@ -8,7 +8,14 @@
           <div class="is-size-6">{{this.meta.desc}}</div>
         </div>
         <div class="my-push-right">
-          <b-button type="is-primary" size="is-medium">
+          <b-switch style="margin-right: 12px"
+                    v-model="meta.status"
+                    size="is-small"
+                    true-value="ACTIVE"
+                    false-value="DISABLED">
+            {{ meta.status ==='ACTIVE' ? 'ACTIVE' : 'INACTIVE' }}
+          </b-switch>
+          <b-button type="is-primary" size="is-medium" @click="save">
             <span>Save Workflow</span>
           </b-button>
         </div>
@@ -147,7 +154,7 @@
               </button>
 
               <b-dropdown-item
-                value="Hook"
+                value="HOOK"
                 aria-role="listitem">
                 <span>Hook</span>
               </b-dropdown-item>
@@ -201,6 +208,7 @@
             return {
                 model: [],
                 meta: {
+                    status: 'ACTIVE',
                     entityName: '',
                     trigger: '',
                     criterias: [],
@@ -213,14 +221,14 @@
                 trigger: '',
                 actionName: '',
                 hasPreMeta: false,
-                desc:'',
-                name:'',
-                workflowType:''
+                desc: '',
+                name: '',
+                workflowType: ''
             }
         },
         async created() {
-            this.model = await api.fetchModel();
-            // this.meta = await api.fetchMeta(123); //TODO: API
+            this.model = (await api.fetchModel()).data;
+            // this.meta = await api.fetchWorkflow(123); //TODO: API
         },
         computed: {
             triggers() {
@@ -265,14 +273,18 @@
             }
         },
         methods: {
-            proceed(){
-              if(this.name === '' || this.desc === '' || this.workflowType === ''){
-                  return;
-              }
-              this.meta.name = this.name;
-              this.meta.desc = this.desc;
-              this.meta.type = this.workflowType;
-              this.hasPreMeta = true;
+            async save() {
+                await api.createWorkflow(this.meta);
+                this.$router.push('/')
+            },
+            proceed() {
+                if (this.name === '' || this.desc === '' || this.workflowType === '') {
+                    return;
+                }
+                this.meta.name = this.name;
+                this.meta.desc = this.desc;
+                this.meta.type = this.workflowType;
+                this.hasPreMeta = true;
             },
             addCriteria() {
                 this.meta.criterias.push({});
