@@ -73,7 +73,6 @@
             this.inputDataType = this.type;
             if (!this.$isEmpty(this.value))
                 if (this.type === 'multi_list') {
-                    console.log('sdj,nf', this.value);
                     this.selectedOptions = this.value;
                 } else if (this.type === 'list') {
                     this.selectedOption = this.value;

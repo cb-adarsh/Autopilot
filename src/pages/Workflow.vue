@@ -1,7 +1,12 @@
 <template>
   <div>
     <Navbar/>
-    <div class="my-container">
+    <div v-if="!hasPreMeta" class="my-container">
+      <div class="my-push-right">
+        <b-button type="is-primary" size="is-medium">
+          <span>Save Workflow</span>
+        </b-button>
+      </div>
       <b-field label="Entity">
         <b-dropdown
           v-model="entityName"
@@ -95,10 +100,58 @@
                 @input="(val) => updateActionAttr(val,attribute.name)"
               />
             </div>
-
+            <div v-for="attribute in multiActionParamsAttributes" :key="rand()">
+              <MultiInputs
+                v-for="(multiAttr,index) in getMultiAttribute(attribute.name)"
+                :key="multiAttr.key"
+                :possible-values="attribute"
+                :value="multiAttr"
+                @update="(metaVal)=>updateMultiAttr(metaVal,index)"
+                @delete="deleteMultiAttr(multiAttr,index)"
+              />
+              <b-button @click="addMultiAttr(attribute.name)">
+                <span>Add {{attribute.name}}</span>
+              </b-button>
+            </div>
           </div>
         </div>
       </template>
+    </div>
+    <div v-else>
+      <b-modal :active="true"
+               :has-modal-card="true"
+               aria-role="dialog"
+               aria-modal>
+        <div class="card" style="width: 400px;">
+          <div class="title">Workflow</div>
+          <b-field label="Name">
+            <b-input v-model="name" type="string" @input="updateVal"></b-input>
+          </b-field>
+          <b-field label="Description">
+            <b-input v-model="desc" type="string" @input="updateVal"></b-input>
+          </b-field>
+          <b-field label="Entity">
+            <b-dropdown
+              v-model="entityName"
+              :mobile-modal="false"
+              aria-role="list">
+              <button class="button select" type="button" slot="trigger">
+                <span>{{ meta.entityName || 'Choose an entity' }}</span>
+                <b-icon icon="menu-down"></b-icon>
+              </button>
+
+              <b-dropdown-item
+                v-for="option in entities"
+                :key="option"
+                :value="option"
+                aria-role="listitem">
+                <span>{{option}}</span>
+              </b-dropdown-item>
+
+            </b-dropdown>
+          </b-field>
+        </div>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -108,13 +161,17 @@
     import Condition from "../components/Condition";
     import Navbar from "../components/Navbar";
     import DynamicInput from "../components/DynamicInput";
+    import MultiInputs from "../components/MultiInputs";
+    import Chart from "../components/Chart";
 
     export default {
         name: 'Workflow',
         components: {
+            Chart,
             Condition,
             Navbar,
             DynamicInput,
+            MultiInputs,
         },
         data() {
             return {
@@ -124,12 +181,14 @@
                     trigger: '',
                     criterias: [],
                     action: {
-                        attributes: []
+                        attributes: [],
+                        multiAttribute: []
                     }
                 },
                 entityName: '',
                 trigger: '',
                 actionName: '',
+                hasPreMeta: false
             }
         },
         async created() {
@@ -167,8 +226,16 @@
                 } else {
                     return [];
                 }
+            },
+            multiActionParamsAttributes() {
+                if (this.model.length > 0 && this.meta.entityName !== '' && this.actionName !== '') {
+                    let actions = this.model.find(m => m.entityName === this.meta.entityName).actions;
+                    let action = actions.find(action => action.name === this.actionName);
+                    return action.multiAttribute;
+                } else {
+                    return [];
+                }
             }
-
         },
         methods: {
             addCriteria() {
@@ -198,6 +265,29 @@
             getActionAttrValue(attrName) {
                 let attribute = this.meta.action.attributes.find(attr => attr.name === attrName);
                 return attribute === undefined ? '' : attribute.value;
+            },
+            updateMultiAttr(meta, index) {
+                let multiAttr = this.meta.action.multiAttribute;
+                let matchedMeta = multiAttr.filter(attr => attr.name === meta.name)[index];
+                let attr = multiAttr[multiAttr.findIndex(ma => ma === matchedMeta)];
+                attr.fields = meta.fields;
+            },
+            getMultiAttribute(attrName) {
+                return this.meta.action.multiAttribute.filter(attr => attr.name === attrName);
+            },
+            addMultiAttr(attrName) {
+                let index = this.findLastIndex(this.meta.action.multiAttribute, 'name', attrName);
+                this.meta.action.multiAttribute.splice(index + 1, 0, {name: attrName, key: this.rand()})
+            },
+            findLastIndex(array, searchKey, searchValue) {
+                let index = array.slice().reverse().findIndex(x => x[searchKey] === searchValue);
+                let count = array.length - 1;
+                return index >= 0 ? count - index : index;
+            },
+            deleteMultiAttr(multiAttribute, index) {
+                let multiAttr = this.meta.action.multiAttribute;
+                let matchedMeta = multiAttr.filter(attr => attr.name === multiAttribute.name)[index];
+                multiAttr.splice(multiAttr.findIndex(ma => ma === matchedMeta), 1);
             }
         },
         watch: {
@@ -206,20 +296,25 @@
                 this.meta.trigger = '';
                 this.meta.criterias = [];
                 this.meta.action = {
-                    attributes: []
+                    attributes: [],
+                    multiAttribute: []
                 };
+                this.actionName = '';
             },
             trigger(newVal) {
                 this.meta.trigger = newVal;
                 this.meta.criterias = [];
                 this.meta.action = {
-                    attributes: []
+                    attributes: [],
+                    multiAttribute: []
                 };
+                this.actionName = '';
             },
             actionName(newVal) {
                 this.meta.action = {
                     actionName: newVal,
-                    attributes: []
+                    attributes: [],
+                    multiAttribute: []
                 };
 
             }

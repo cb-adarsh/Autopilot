@@ -7,8 +7,17 @@ nav {
   padding: 10px 40px;
 }
 
+input {
+  min-width: 200px;
+}
+
 .my-container {
   padding: 20px 40px;
+}
+
+.my-push-right {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .my-transition {
@@ -19,11 +28,12 @@ nav {
   /*transition: all ease 0.2s;*/
   border: 1px solid transparent;
   border-radius: 8px;
-  padding: 12px;
+  padding-bottom: 24px;
 }
 
 .my-paper {
   border: 1px solid #dbdbdb;
+  padding: 12px 12px 24px;
 }
 
 .my-flex {
@@ -43,9 +53,30 @@ nav {
 .my-action {
   display: flex;
   margin-bottom: 12px;
+  margin-left: 12px;
   align-items: center;
+}
+
+.my-multi-action {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #666678;
+  padding-top: 24px;
+  padding-bottom: 16px;
 }
 
 .my-action-name {
   min-width: 160px;
+}
+
+.my-error-log-container {
+  height: 267px;
+  overflow: scroll;
+}
+
+.card{
+  padding: 12px 16px;
+}
+.card-content{
+  padding: 0;
 }
