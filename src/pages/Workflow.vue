@@ -42,16 +42,17 @@
       </b-field>
       <b-field label="Trigger" v-if="meta.entityName !== ''">
         <b-dropdown
-          v-model="trigger"
+          v-model="triggers"
           :mobile-modal="false"
+          multiple
           aria-role="list">
           <button class="button select" type="button" slot="trigger">
-            <span>{{ meta.trigger || 'Choose a trigger' }}</span>
+            <span>{{ meta.triggers.length > 0 ? meta.triggers.join(', ') : 'Choose a trigger' }}</span>
             <b-icon icon="menu-down"></b-icon>
           </button>
 
           <b-dropdown-item
-            v-for="option in triggers"
+            v-for="option in triggerx"
             :key="option"
             :value="option"
             aria-role="listitem">
@@ -60,7 +61,7 @@
 
         </b-dropdown>
       </b-field>
-      <template v-if="meta.entityName !== '' && meta.trigger !== ''">
+      <template v-if="meta.entityName !== '' && meta.triggers !== ''">
         <div class="label">Criterias</div>
         <div class="my-pre-paper" :class="{'my-paper':meta.criterias.length > 0}">
           <condition
@@ -76,7 +77,7 @@
           </b-button>
         </div>
       </template>
-      <template v-if="meta.entityName !== '' && meta.trigger !== ''">
+      <template v-if="meta.entityName !== '' && meta.triggers !== ''">
         <div>
           <b-field label="Action">
             <b-dropdown
@@ -210,7 +211,7 @@
                 meta: {
                     status: 'ACTIVE',
                     entityName: '',
-                    trigger: '',
+                    triggers: [],
                     criterias: [],
                     action: {
                         attributes: [],
@@ -218,7 +219,7 @@
                     }
                 },
                 entityName: '',
-                trigger: '',
+                triggers: [],
                 actionName: '',
                 hasPreMeta: false,
                 desc: '',
@@ -231,7 +232,7 @@
             // this.meta = await api.fetchWorkflow(123); //TODO: API
         },
         computed: {
-            triggers() {
+            triggerx() {
                 return this.model.length > 0 && this.meta.entityName !== ''
                     ? this.model.find(m => m.entityName === this.meta.entityName).trigger
                     : [];
@@ -248,8 +249,8 @@
                 return this.model.length > 0 ? this.model.find(m => m.entityName === this.meta.entityName).criterias : [];
             },
             selectedTrigger() {
-                if (this.meta.trigger !== '') {
-                    return this.meta.trigger;
+                if (this.meta.triggers !== '') {
+                    return this.meta.triggers;
                 }
                 return '';
             },
@@ -341,7 +342,7 @@
         watch: {
             entityName(newVal) {
                 this.meta.entityName = newVal;
-                this.meta.trigger = '';
+                this.meta.triggers = '';
                 this.meta.criterias = [];
                 this.meta.action = {
                     attributes: [],
@@ -349,8 +350,8 @@
                 };
                 this.actionName = '';
             },
-            trigger(newVal) {
-                this.meta.trigger = newVal;
+            triggers(newVal) {
+                this.meta.triggers = newVal;
                 this.meta.criterias = [];
                 this.meta.action = {
                     attributes: [],

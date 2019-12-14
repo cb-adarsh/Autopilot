@@ -4,6 +4,7 @@ import App from '../App.vue'
 import Dashboard from "../pages/Dashboard.vue";
 import Workflow from "../pages/Workflow";
 import Logs from "../pages/Logs";
+import List from "../pages/List";
 
 Vue.use(Router);
 
@@ -33,6 +34,11 @@ export default new Router({
           path: 'logs',
           name: 'logs',
           component: Logs
+        },
+        {
+          path: 'list',
+          name: 'logs',
+          component: List
         }
       ]
     },
