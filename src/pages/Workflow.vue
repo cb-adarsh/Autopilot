@@ -84,7 +84,7 @@
               :mobile-modal="false"
               aria-role="list">
               <button class="button select" type="button" slot="trigger">
-                <span>{{ meta.action.actionName || 'Choose an action' }}</span>
+                <span>{{ meta.action.name || 'Choose an action' }}</span>
                 <b-icon icon="menu-down"></b-icon>
               </button>
 
@@ -360,7 +360,7 @@
             },
             actionName(newVal) {
                 this.meta.action = {
-                    actionName: newVal,
+                    name: newVal,
                     attributes: [],
                     multiAttribute: []
                 };
